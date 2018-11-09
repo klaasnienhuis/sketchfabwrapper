@@ -6,7 +6,6 @@ var sketchfabwrapper = {
     textureList: [],
     materialList: [],
     
-    
     getNodeMap: function(){
         this.api.getNodeMap(function(err,nodes){
             sketchfabwrapper.nodeMap = nodes;
