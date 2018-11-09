@@ -1,5 +1,5 @@
 
-var SketchfabWrapper = {
+var sketchfabwrapper = {
     api: null,
     nodeMap:[],
     sceneGraph:null,
@@ -8,21 +8,21 @@ var SketchfabWrapper = {
     
     getNodeMap: function(){
         this.api.getNodeMap(function(err,nodes){
-            SketchfabWrapper.nodeMap = nodes;
+            sketchfabwrapper.nodeMap = nodes;
         });
     },
     
     //get the scenegraph from the scene and add the parents to each node
     getSceneGraph: function(){
         this.api.getSceneGraph(function(err,graph){
-            SketchfabWrapper.sceneGraph = graph;
-            SketchfabWrapper.addSceneGraphFoodchain(SketchfabWrapper.sceneGraph,null);
+            sketchfabwrapper.sceneGraph = graph;
+            sketchfabwrapper.addSceneGraphFoodchain(sketchfabwrapper.sceneGraph,null);
         });
     },
     
     setAnimation: function(idx){
         this.api.getAnimations(function(err,animations){
-            SketchfabWrapper.setAnimationCallback(animations,idx)
+            sketchfabwrapper.setAnimationCallback(animations,idx)
         });
     },
     
@@ -41,7 +41,7 @@ var SketchfabWrapper = {
         };
      
         if (currentNode.hasOwnProperty('children')){
-            currentNode.children.some(child => SketchfabWrapper.addSceneGraphFoodchain(child, currentNode));
+            currentNode.children.some(child => sketchfabwrapper.addSceneGraphFoodchain(child, currentNode));
         };
     },
     
@@ -52,7 +52,7 @@ var SketchfabWrapper = {
         }
         if (currentNode.hasOwnProperty('children')){
             var node;
-            currentNode.children.some(child => node = SketchfabWrapper.getNodeFromGraphByID(child, instanceID));
+            currentNode.children.some(child => node = sketchfabwrapper.getNodeFromGraphByID(child, instanceID));
             return node;        
         }
     },
@@ -65,30 +65,30 @@ var SketchfabWrapper = {
         }
         if (currentNode.hasOwnProperty('children')){
             currentNode.children.forEach(function(child){
-                SketchfabWrapper.getNodeFromGraphByName(child, theName, theType, theResult)
+                sketchfabwrapper.getNodeFromGraphByName(child, theName, theType, theResult)
             });
         }
     },
 
     getTextureList: function(callback){
         this.api.getTextureList(function(err,textures){
-            SketchfabWrapper.textureList = textures;
+            sketchfabwrapper.textureList = textures;
             callback();
         });
     },
     
     getMaterialList: function(callback){
         this.api.getMaterialList( function( err, materials ) {
-            SketchfabWrapper.materialList = materials;
+            sketchfabwrapper.materialList = materials;
             if (callback != null) callback();
         });
     },
     
     getTextureByName: function(textureName){
         var textureUid = null;
-        for (var n = 0; n < SketchfabWrapper.textureList.length; n++){
-            if (SketchfabWrapper.textureList[n].name.indexOf(textureName) > -1){
-                textureUid = SketchfabWrapper.textureList[n].uid;
+        for (var n = 0; n < sketchfabwrapper.textureList.length; n++){
+            if (sketchfabwrapper.textureList[n].name.indexOf(textureName) > -1){
+                textureUid = sketchfabwrapper.textureList[n].uid;
             }
         }
         return textureUid;
